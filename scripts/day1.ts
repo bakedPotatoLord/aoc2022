@@ -1,13 +1,32 @@
-import {parseInput, parseInputAsNum} from "./parseInput.js";
-
-let input = await parseInput("1.txt")
-
-for(let i of input){
-  console.log(i)
-}
+import {parseInput, parseInputAsNum,arrSum} from "./helpers.js";
 
 let input2 = await parseInputAsNum("1.txt")
 
+let calArray:number[] = []
+
+let totalArray:number[] = []
+
+let topElves:number[]= []
+
+
 for(let i of input2){
-  console.log(i)
+  if(!isNaN(i)){
+		calArray.push(i)
+	}else{
+		totalArray.push(arrSum(calArray))
+		calArray = []
+	}
 }
+
+for(let i = 0;i<3;i++){
+	let max = Math.max(...totalArray)
+	for(let j in totalArray){
+		if(totalArray[j] == max){
+			topElves.push(totalArray[j])
+			totalArray.splice(j,1,0)
+		}
+	}
+}
+console.log(topElves)
+
+console.log(arrSum(topElves))
