@@ -14,16 +14,12 @@ for(let i of input2){
 		calArray = []
 	}
 }
+console.log("solution1: ",Math.max(...totalArray))
+
 
 for(let i = 0;i<3;i++){
-	let max = Math.max(...totalArray)
-	for(let j in totalArray){
-		if(totalArray[j] == max){
-			topElves.push(totalArray[j])
-			totalArray.splice(parseInt(j),1,0)
-		}
-	}
+	let j = totalArray.indexOf(Math.max(...totalArray))
+	topElves.push(totalArray[j])
+	totalArray.splice(j,1,0)
 }
-
-console.log(topElves)
-console.log(arrSum(topElves))
+console.log("solution2: ",arrSum(topElves))
