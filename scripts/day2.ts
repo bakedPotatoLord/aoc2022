@@ -1,20 +1,8 @@
 import { parseInput,arrSum} from "./helpers.js";
-
-let input2 = await parseInput("2.txt","\n")
-let parsed:string[][] = Array.from(input2,(el,i)=>el.split(" "))
-
-//A rock = 1
-//B paper = 2
-//C scisors = 3
-
-//x rock = 1
-//y paper = 2
-//z scisors = 3
-
-//x lose
-//y draw
-//z win
-
+//split into a 2d string array
+let input = await parseInput("2.txt","\n")
+let parsed:string[][] = Array.from(input,(el,i)=>el.split(" "))
+//create LUTs
 let pointCombos = {
 	AX : 1+3,
 	AY : 2+6,
@@ -37,9 +25,9 @@ let pointCombos2 = {
 	CY : 3+3,
 	CZ : 6+1,
 }
-
-let pointArr:number[] = parsed.map((el,i)=>pointCombos[el[0]+el[1]] )
+//create array from results from LUT
+let pointArr = parsed.map((el,i)=>pointCombos[el[0]+el[1]])
 console.log("part1: ",arrSum(pointArr))
-
+//create array from results from second LUT
 pointArr = parsed.map((el)=>pointCombos2[el[0]+el[1]])
 console.log("part2: ",arrSum(pointArr))
