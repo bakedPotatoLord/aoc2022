@@ -1,19 +1,9 @@
-import { parseInputAsNum,arrSum} from "./helpers.js";
+import { parseInput,arrSum} from "./helpers.js";
 
-let input2 = await parseInputAsNum("1.txt","\n")
+let input2 = await parseInput("1.txt","\n\n")
 
-let calArray:number[] = []
-let totalArray:number[] = []
+let data = input2.map((el)=> arrSum(el.split("\n").map(el=>parseInt(el))))
 
-for(let i of input2){
-  if(!isNaN(i)){
-		calArray.push(i)
-	}else{
-		totalArray.push(arrSum(calArray))
-		calArray = []
-	}
-}
-console.log("solution1: ",Math.max(...totalArray))
-
-totalArray.sort((a, b) =>a - b);
-console.log("solution2: ",arrSum(totalArray.slice(-3)))
+console.log("solution1: ",Math.max(...data))
+data.sort((a, b) =>a - b);
+console.log("solution2: ",arrSum(data.slice(-3)))
