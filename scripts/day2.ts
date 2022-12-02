@@ -38,12 +38,8 @@ let pointCombos2 = {
 	CZ : 6+1,
 }
 
-let pointArr:number[] = Array.from(parsed,(el,i)=>{
-	return pointCombos[el[0]+el[1]]
-})
+let pointArr:number[] = parsed.map((el,i)=>pointCombos[el[0]+el[1]] )
 console.log("part1: ",arrSum(pointArr))
 
-pointArr = Array.from(parsed,(el,i)=>{
-	return pointCombos2[el[0]+el[1]]
-})
+pointArr = parsed.map((el)=>pointCombos2[el[0]+el[1]])
 console.log("part2: ",arrSum(pointArr))
