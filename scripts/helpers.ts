@@ -11,3 +11,15 @@ export  async function parseInputAsNum(name:string,splitCriteria:string|RegExp):
 export function arrSum(arr:number[]){
 	return arr.reduce((partialSum, a) => partialSum + a, 0);
 }
+
+export function hasDuplicates(array:any[]) {
+  var valuesSoFar = [];
+  for (var i = 0; i < array.length; ++i) {
+      var value = array[i];
+      if (valuesSoFar.indexOf(value) !== -1) {
+          return true;
+      }
+      valuesSoFar.push(value);
+  }
+  return false;
+}
