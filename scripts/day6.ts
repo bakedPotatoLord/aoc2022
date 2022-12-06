@@ -1,4 +1,4 @@
-import { parseInput,arrSum} from "./helpers.js";
+import { parseInput,arrSum,hasDuplicates} from "./helpers.js";
 //split into a 2d string array
 let input = (await parseInput("6.txt",""))
 
@@ -12,16 +12,4 @@ for(let i in input){
       break
     }
   }
-}
-
-function hasDuplicates(array:any[]) {
-  var valuesSoFar = [];
-  for (var i = 0; i < array.length; ++i) {
-      var value = array[i];
-      if (valuesSoFar.indexOf(value) !== -1) {
-          return true;
-      }
-      valuesSoFar.push(value);
-  }
-  return false;
 }
