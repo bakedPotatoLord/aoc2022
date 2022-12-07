@@ -1,28 +1,28 @@
 import { getRandomValues } from "crypto";
 import { parseInput,arrSum,hasDuplicates, deepCopy} from "./helpers.js";
-//split into a 2d string array
+//split into a 3d string array 🤏
 let input = (await parseInput("7.txt","$"))
 .map(el=>el.slice(1,el.length))
 .map(el=>el.split("\n").filter(el=>(el != '')).map(el=>el.split(" ")))
-input.shift()
+input.shift() //remove initial cd
 
 let nodes:Node[] = []
-
-let currentDir:Node|null = null
+let currentDir:Node = null //setting initial dir to null because 🧠
 
 class Node{
   name: string;
-  parent: Node|null
+  parent: Node
   children: Node[]
   values:number[]
   files:number[]
-  constructor(name:string,parent:Node|null){
+  constructor(name:string,parent:Node){
     this.children = []
     this.parent = parent
     this.values = []
     this.name = name
   }
   getSum = ():number=>{
+    //recursion 🔁🔁🔁🔁 bc im a master programmer
     return arrSum(this?.children.map(el=>el.getSum() )) + arrSum(this.values)
   } 
 }
@@ -32,31 +32,27 @@ input.forEach(el=>{
     if(el[0][1] ==".."){
       currentDir = currentDir.parent
     }else{
+      //to add a directory node
       nodes.push(new Node(el[0][1],currentDir))
       currentDir = nodes[nodes.length -1]
+      //pushing children like a middle school bully 😱
       currentDir.parent?.children.push(currentDir)
     }
   }else if(el[0][0] = 'ls'){
+    //parse ls files 🤏
     let dir = (<string[][]>deepCopy(el))
-    dir.shift()
-    dir = dir.filter(el=>el[0] != 'dir')
+    dir.shift() // i dont want the "ls" ❌
+    dir = dir.filter(el=>el[0] != 'dir') // i dont want the filenames ❌
     let files = dir.map(el=>parseInt(el[0]))
-    //console.log(files)
     currentDir.values.push(...files)
-
   }
 })
 
-
-let sizeSums = nodes.map(el=>el.getSum() )
-
-let filteredSum = arrSum(sizeSums.filter(el=>el <= 100_000))
-
+let sizeSums = nodes.map(el=>el.getSum() ) // recursive dir size 🔁
+let filteredSum = arrSum(sizeSums.filter(el=>el <= 100_000)) //dirs with size under 100_000
 console.log("p1: ",filteredSum)
 
-let totalSize = Math.max(...sizeSums)
-let spaceNeeded = totalSize - 40_000_000
-
-let largeEnough = sizeSums.filter(el=>el>=spaceNeeded)
-
+let totalSize = Math.max(...sizeSums) //size of base directory
+let spaceNeeded = totalSize - 40_000_000 
+let largeEnough = sizeSums.filter(el=>el>=spaceNeeded) //dirs that can empty enough space
 console.log('p2: ',Math.min(...largeEnough))
