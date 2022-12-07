@@ -23,3 +23,5 @@ export function hasDuplicates(array:any[]) {
   }
   return false;
 }
+
+export const deepCopy = (thing:any) => JSON.parse(JSON.stringify(thing))
