@@ -2,5 +2,8 @@
   "type": "module",
   "devDependencies": {
     "@types/node": "^18.11.9"
+  },
+  "dependencies": {
+    "ts-node": "^10.9.1"
   }
 }
