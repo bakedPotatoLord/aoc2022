@@ -1,8 +1,8 @@
 import { parseInput,arrSum} from "./helpers.js";
 //split into a 2d string array
-let input = (await parseInput("5.txt","\n\n"))
+let input = (await parseInput("5.txt","\r\n\r\n"))
 let boxes = input[0]
-.split("\n").slice(0,-1)
+.split("\r\n").slice(0,-1)
 
 let parsedBoxes: string[][]=[
 boxes.map(el=>el.charAt(1)),
@@ -21,7 +21,7 @@ boxes.map(el=>el.charAt(33)),
 let parsedBoxClone = JSON.parse(JSON.stringify(parsedBoxes))
 
 let instructions = input[1]
-.split("\n")
+.split("\r\n")
 .map(el=>el.split(/move | from | to /).slice(-3).map(
   el=>parseInt(el)
 ))

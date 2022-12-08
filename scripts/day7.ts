@@ -1,9 +1,8 @@
-import { getRandomValues } from "crypto";
-import { parseInput,arrSum,hasDuplicates, deepCopy} from "./helpers.js";
+import { parseInput,arrSum, deepCopy} from "./helpers.js";
 //split into a 3d string array 🤏
 let input = (await parseInput("7.txt","$"))
 .map(el=>el.slice(1,el.length))
-.map(el=>el.split("\n").filter(el=>(el != '')).map(el=>el.split(" ")))
+.map(el=>el.split("\r\n").filter(el=>(el != '')).map(el=>el.split(" ")))
 input.shift() //remove initial cd
 
 let nodes:Node[] = []

@@ -1,6 +1,6 @@
 import { parseInput,arrSum} from "./helpers.js";
 //split into a 2d string array
-let input = await parseInput("4.txt","\n")
+let input = await parseInput("4.txt","\r\n")
 
 let parsed = input.map(el=>el.split(",")
 .map(el=>el.split("-")

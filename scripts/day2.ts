@@ -1,6 +1,6 @@
 import { parseInput,arrSum} from "./helpers.js";
 //split into a 2d string array
-let input = await parseInput("2.txt","\n")
+let input = await parseInput("2.txt","\r\n")
 let parsed:string[][] = Array.from(input,(el,i)=>el.split(" "))
 //create LUTs
 let pointCombos = {
