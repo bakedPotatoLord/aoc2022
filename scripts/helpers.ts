@@ -25,3 +25,8 @@ export function hasDuplicates(array:any[]) {
 }
 
 export const deepCopy = (thing:any) => JSON.parse(JSON.stringify(thing))
+
+export interface point{
+  x:number
+  y:number
+}
