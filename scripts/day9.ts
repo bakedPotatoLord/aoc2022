@@ -13,13 +13,6 @@ function toStr(ob:Point){
   return ""+ob.x+","+ob.y
 }
 
-function isDiagonal(p1:Point,p2:Point){
-  return Math.abs(p1.x-p2.x) == Math.abs(p1.y-p2.y)  
-}
-function isNextTo(p1:Point,p2:Point){
-  return (Math.abs(p1.x-p2.x) == 1 && Math.abs(p1.y-p2.y) == 0 ) || (Math.abs(p1.x-p2.x) == 0 && Math.abs(p1.y-p2.y) == 1 )
-}
-
 function canFollow(p1:Point,p2:Point){
   return !(Math.abs(p1.x-p2.x) <= 1 && Math.abs(p1.y-p2.y)  <=1)
 }
@@ -40,7 +33,7 @@ input.forEach((dir,ind)=>{
     }else if(dir[0] == "D"){
       h.y--
     }
-    if(!(ind == 0 && i == 0)  && !isDiagonal(t,h) && !isNextTo(t,h)){
+    if(!(ind == 0 && i == 0)  && canFollow(h,t)){
       //if not the first iteration or tail directly next to head
       if(h.y > t.y){
         t.y++
