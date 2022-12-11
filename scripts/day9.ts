@@ -1,13 +1,13 @@
 import { parseInput,arrSum, deepCopy,Point} from "./helpers.js";
 
-//split into a 3d string array 🤏
+//split into instruction array 🤏
 let input = (await parseInput("9.txt","\r\n"))
 .map(el=>el.split(" "))
 .map(el=>[el[0],parseInt(el[1])])
 
-
-let h:Point = {x:0,y:0}
-let t:Point = {x:0,y:0}
+//create head and tail points
+let h:Point = new Point(0,0)
+let t:Point = new Point(0,0)
 
 function toStr(ob:Point){
   return ""+ob.x+","+ob.y
@@ -17,6 +17,7 @@ function canFollow(p1:Point,p2:Point){
   return !(Math.abs(p1.x-p2.x) <= 1 && Math.abs(p1.y-p2.y)  <=1)
 }
 
+//for keeping track of tail positions
 let postions = new Set()
 
 input.forEach((dir,ind)=>{
@@ -61,8 +62,9 @@ input.forEach((dir,ind)=>{
 })
 console.log("p1",postions.size)
 
-
+//create tail
 let tail:Point[] =Array.from(Array(10),x=> new Point(0,0)) 
+//clear set
 postions.clear()
 
 input.forEach((dir,ind)=>{
