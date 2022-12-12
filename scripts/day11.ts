@@ -2,7 +2,7 @@ import test from "node:test";
 import { parseInput,arrSum, deepCopy,Point} from "./helpers.js";
 
 //split into instruction array 🤏
-let input = (await parseInput("11.txt","\r\n\r\n"))
+let input:[number[],string,number,number,number][] = (await parseInput("11.txt","\r\n\r\n"))
 .map(el=>el.split("\r\n"))
 .map(el=>[
   el[1].split(':')[1].split(',').map(el=>parseInt(el)),
@@ -31,19 +31,30 @@ class Monkey{
   inspectItems(){
     this.items.forEach(item=>{
       let tempItem = Math.floor(<number>eval(this.op.replaceAll(/old/g,item.toString())) /3)
-      if(tempItem % this.test == 0){
+      tempItem % this.test == 0 ?
         monkeys[this.ifTrue].items.push(tempItem)
-      }else{
+      :
         monkeys[this.ifFalse].items.push(tempItem)
-      }
+      ;
+      this.inspectedItems++
+    })
+    this.items = []
+  }
+
+  inspectItems2(){
+    this.items.forEach(item=>{
+      let tempItem = <number>eval(this.op.replaceAll(/old/g,item.toString())) 
+      tempItem % this.test == 0 ?
+        monkeys[this.ifTrue].items.push(tempItem)
+      :
+        monkeys[this.ifFalse].items.push(tempItem)
+      ;
       this.inspectedItems++
     })
     this.items = []
   }
 }
-//@ts-ignore
-let monkeys = input.map(el=>new Monkey(el[0],el[1],el[2],el[3],el[4]))
-
+let monkeys = input.map(el=>new Monkey(...el))
 
 
 for(let j = 0;j<20;j++){
@@ -56,15 +67,11 @@ monkeyBuisness.sort((a,b)=>a-b)
 
 console.log("p1:",monkeyBuisness.slice(-2)[0] * monkeyBuisness.slice(-2)[1])
 
-//@ts-ignore
-monkeys = input.map(el=>new Monkey(el[0],el[1],el[2],el[3],el[4]))
+monkeys = input.map(el=>new Monkey(...el))
 
-for(let j = 0;j<10_000;j++){
-  monkeys.forEach((mon,i)=>{
-    mon.inspectItems()
-  })
-  console.log(j)
-}
+
+
+
 monkeyBuisness = monkeys.map(m=>m.inspectedItems)
 monkeyBuisness.sort((a,b)=>a-b)
 
