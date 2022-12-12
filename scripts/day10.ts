@@ -31,11 +31,17 @@ console.log("p1:",strengthSums)
 
 let sprite = 1
 vals.shift()
+let screen = ""
 
-for(let i of vals){
+vals.forEach((val,i)=>{
+  if(i == 38){
+    console.log("potato")
+  }
+  if(Math.abs((i%40)-val) <=1){
+    screen+="#"
+  }else{
+    screen+="."
+  }
+})
 
-}
-
-let screen:string[] = []
-
-console.log(screen)
+console.log(screen.match(/.{1,40}/g).join("\n"))
