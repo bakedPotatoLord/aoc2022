@@ -1,4 +1,3 @@
-
 import { parseInput,arrSum, deepCopy,Point,Node} from "./helpers.js";
 
 export class BFSNode{
@@ -19,7 +18,6 @@ export class BFSNode{
   .filter(node=>node.value <= this.value+1)
 }
 
-let start:BFSNode
 //split into heightmap  🤏
 //i = top to bottom
 //j = left to right
@@ -36,9 +34,9 @@ let input = (await parseInput("12.txt","\r\n"))
   }
 }))
 
+let start:BFSNode
 let nodes:BFSNode[] = []
 input.forEach(ln=>ln.forEach(node=>nodes.push(node)))
-
 
 export function BFS(start:BFSNode,nodes:BFSNode[]){
   nodes.forEach(el=>el.visited = false)
@@ -63,7 +61,6 @@ export function BFS(start:BFSNode,nodes:BFSNode[]){
 }
 
 let sol1 = BFS(start,nodes)
-
 let starts = nodes.filter(el=>el.value == 1)
 
 let dists = starts.map((n,i)=>{
