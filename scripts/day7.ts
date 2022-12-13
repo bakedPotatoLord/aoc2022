@@ -1,24 +1,22 @@
-import { parseInput,arrSum, deepCopy} from "./helpers.js";
+import { parseInput,arrSum, deepCopy,Node} from "./helpers.js";
 //split into a 3d string array 🤏
 let input = (await parseInput("7.txt","$"))
 .map(el=>el.slice(1,el.length))
 .map(el=>el.split("\r\n").filter(el=>(el != '')).map(el=>el.split(" ")))
 input.shift() //remove initial cd
 
-let nodes:Node[] = []
-let currentDir:Node = null //setting initial dir to null because 🧠
+let nodes:DirNode[] = []
+let currentDir:DirNode = null //setting initial dir to null because 🧠
 
-class Node{
-  name: string;
-  parent: Node
-  children: Node[]
+class DirNode extends Node{
   values:number[]
   files:number[]
-  constructor(name:string,parent:Node){
+  declare children:DirNode[]
+  declare parent: DirNode
+  constructor(name:string,parent:DirNode){
+    super(name,parent)
     this.children = []
-    this.parent = parent
     this.values = []
-    this.name = name
   }
   getSum = ():number=>{
     //recursion 🔁🔁🔁🔁 bc im a master programmer
@@ -32,7 +30,7 @@ input.forEach(el=>{
       currentDir = currentDir.parent
     }else{
       //to add a directory node
-      nodes.push(new Node(el[0][1],currentDir))
+      nodes.push(new DirNode(el[0][1],currentDir))
       currentDir = nodes[nodes.length -1]
       //pushing children like a middle school bully 😱
       currentDir.parent?.children.push(currentDir)
