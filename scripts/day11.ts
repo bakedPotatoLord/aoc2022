@@ -1,4 +1,3 @@
-import test from "node:test";
 import { parseInput,arrSum, deepCopy,Point} from "./helpers.js";
 
 //split into instruction array 🤏
@@ -40,22 +39,8 @@ class Monkey{
     })
     this.items = []
   }
-
-  inspectItems2(){
-    this.items.forEach(item=>{
-      let tempItem = <number>eval(this.op.replaceAll(/old/g,item.toString())) 
-      tempItem % this.test == 0 ?
-        monkeys[this.ifTrue].items.push(tempItem)
-      :
-        monkeys[this.ifFalse].items.push(tempItem)
-      ;
-      this.inspectedItems++
-    })
-    this.items = []
-  }
 }
 let monkeys = input.map(el=>new Monkey(...el))
-
 
 for(let j = 0;j<20;j++){
   monkeys.forEach((mon,i)=>{
@@ -64,16 +49,5 @@ for(let j = 0;j<20;j++){
 }
 let monkeyBuisness = monkeys.map(m=>m.inspectedItems)
 monkeyBuisness.sort((a,b)=>a-b)
-
-console.log("p1:",monkeyBuisness.slice(-2)[0] * monkeyBuisness.slice(-2)[1])
-
-monkeys = input.map(el=>new Monkey(...el))
-
-
-
-
-monkeyBuisness = monkeys.map(m=>m.inspectedItems)
-monkeyBuisness.sort((a,b)=>a-b)
-
 console.log("p1:",monkeyBuisness.slice(-2)[0] * monkeyBuisness.slice(-2)[1])
 
