@@ -34,3 +34,14 @@ export class Point{
     this.y = y
   }
 }
+
+export class Node{
+  name: string;
+  parent: Node
+  children: Node[]
+  constructor(name:string,parent:Node){
+    this.children = []
+    this.parent = parent
+    this.name = name
+  }
+}
