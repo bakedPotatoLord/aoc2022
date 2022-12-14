@@ -38,24 +38,13 @@ input.forEach((dir,ind)=>{
       //if not the first iteration or tail directly next to head
       if(h.y > t.y){
         t.y++
-        if(h.x > t.x){
-          t.x++
-        }else if(h.x < t.x){
-          t.x--
-        }
       }else if(h.y < t.y){
         t.y--
-        if(h.x > t.x){
-          t.x++
-        }else if(h.x < t.x){
-          t.x--
-        }
-      }else{
-        if(h.x > t.x){
-          t.x++
-        }else if(h.x < t.x){
-          t.x--
-        }
+      }
+      if(h.x > t.x){
+        t.x++
+      }else if(h.x < t.x){
+        t.x--
       }
     }
   }
@@ -94,24 +83,13 @@ input.forEach((dir,ind)=>{
         //if not the first iteration or tail directly next to head
         if(h.y > t.y){
           t.y++
-          if(h.x > t.x){
-            t.x++
-          }else if(h.x < t.x){
-            t.x--
-          }
         }else if(h.y < t.y){
           t.y--
-          if(h.x > t.x){
-            t.x++
-          }else if(h.x < t.x){
-            t.x--
-          }
-        }else{
-          if(h.x > t.x){
-            t.x++
-          }else if(h.x < t.x){
-            t.x--
-          }
+        }
+        if(h.x > t.x){
+          t.x++
+        }else if(h.x < t.x){
+          t.x--
         }
       }
     }
