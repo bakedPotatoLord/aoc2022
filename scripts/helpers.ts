@@ -38,6 +38,10 @@ export class Point{
   clone = ()=>deepCopy(this)
 }
 
+export function range(start:number, end:number) {
+  return [...Array(Math.abs(start-end)+1).keys()].map(i => i + Math.min(...[start,end]));
+}
+
 export class Node{
   name: string;
   parent: Node
