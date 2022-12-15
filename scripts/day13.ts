@@ -9,7 +9,7 @@ let input:thing = (await parseInput("13.txt","\r\n\r\n"))
 //create input copy
 let s1 = [[2]], s2 = [[6]]
 let in2:thing[] = [s1,s2]
-deepCopy(input).forEach((el: thing[]) =>in2.push(el[0],el[1]))
+deepCopy(input).forEach((el) =>in2.push(el[0],el[1]))
 
 function compare(el1:thing,el2:thing):boolean{
   //create deep copies
