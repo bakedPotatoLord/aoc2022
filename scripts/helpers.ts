@@ -36,6 +36,7 @@ export class Point{
 
   equals=(p:Point)=> this.x == p.x && this.y == p.y
   clone = ()=>deepCopy(this)
+  toString = ():string => `${this.x},${this.y}`
 }
 
 export function range(start:number, end:number) {
