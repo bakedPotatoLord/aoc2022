@@ -24,7 +24,7 @@ export function hasDuplicates(array:any[]) {
   return false;
 }
 
-export const deepCopy = (thing:any) => JSON.parse(JSON.stringify(thing))
+export const deepCopy = structuredClone
 
 export class Point{
   x:number
@@ -33,6 +33,9 @@ export class Point{
     this.x = x
     this.y = y
   }
+
+  equals=(p:Point)=> this.x == p.x && this.y == p.y
+  clone = ()=>deepCopy(this)
 }
 
 export class Node{
