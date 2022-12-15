@@ -2,8 +2,10 @@ import { parseInput,arrSum, deepCopy,Point,Node,range} from "./helpers.js";
 
 let input = (await parseInput("14.txt","\r\n"))
 .map(el=>el.split(' -> ')
-.map(el=>el.split(',')
-.map(el=>parseInt(el))))
+  .map(el=>el.split(',')
+    .map(el=>parseInt(el))
+  )
+)
 
 let walls:Set<string> =  new Set()
 input.forEach(ln=>
