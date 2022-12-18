@@ -37,6 +37,10 @@ export class Point{
   equals=(p:Point)=> this.x == p.x && this.y == p.y
   clone = ()=>deepCopy(this)
   toString = ():string => `${this.x},${this.y}`
+
+  slopeTo(p1:Point,){
+    return (p1.y-this.y) / (p1.x-this.x)
+  }
 }
 
 export function range(start:number, end:number) {
