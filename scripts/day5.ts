@@ -1,4 +1,4 @@
-import { parseInput,arrSum} from "./helpers.js";
+import { parseInput,arrSum,deepCopy} from "./helpers.js";
 //split into a 2d string array
 let input = (await parseInput("5.txt","\r\n\r\n"))
 let boxes = input[0]
@@ -18,7 +18,7 @@ boxes.map(el=>el.charAt(33)),
 .map(el=>el.reverse())
 .map(el=>el.filter(el=>(el != " ")))
 
-let parsedBoxClone = JSON.parse(JSON.stringify(parsedBoxes))
+let parsedBoxClone = deepCopy(parsedBoxes)
 
 let instructions = input[1]
 .split("\r\n")
