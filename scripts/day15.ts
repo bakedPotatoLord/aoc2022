@@ -1,4 +1,4 @@
-import { parseInput,arrSum, deepCopy,Point,Node,range, parseInputAsNum} from "./helpers.js";
+import { parseInput,arrSum, deepCopy,Point,Node,range, parseInputAsNum,hasOverlap} from "./helpers.js";
 
 let input = (await parseInput("15.txt","\r\n"))
 .map(el=>el.split(/Sensor at x=|, y=|: closest beacon is at x=/g)
@@ -7,7 +7,6 @@ let input = (await parseInput("15.txt","\r\n"))
 )
 const taxiDist = (p1:Point,p2:Point)=> Math.abs(p1.x-p2.x)+Math.abs(p1.y-p2.y)
 
-/*
 let row:boolean[] = new Array(16_000_000).fill(false)
 const offset = 8_000_000
 const line = 20
@@ -26,16 +25,12 @@ input.forEach(el=>{
   }
 })
 console.log('p1',row.filter(el=>el).length)
-*/
-
 
 /**
  * @description points for the [ right, top, left, bottom] vertecies of a sensor-beacon pair
  */
 type shape = [Point,Point,Point,Point]
-/**
- * @returns points for the [ right, top, left, bottom] vertecies of a sensor-beacon pair
- */
+
 function getVertecies(s:Point,b:Point):shape{
   let dist = taxiDist(s,b)
   return [
@@ -45,16 +40,6 @@ function getVertecies(s:Point,b:Point):shape{
     new Point(s.x,s.y-dist),
   ]
 }
-
-interface shapeXInts{
-  tl:number,
-  bl:number,
-  br:number,
-  tr:number
-}
-
-const bottom =20
-const right = 20
 
 let shapes:shape[] = input.map(el=>
   // generates shapes from sensor-beacon pairs 
@@ -74,39 +59,24 @@ function getXInts(s:shape){
   br: getFuncData(s[0],s[3]),
   parent: s
  }
-
 }
 
-function hasOverlap(arr:any[]){
-  for(let el of arr){
-    if( arr.filter(e=>e==el).length > 1 ){
-      return true
-    }
-  }
-  return false
-}
-
-
-hasOverlap([1,2,1])
-
-
-let fittingShapes = []
-
-
-//for each shape
+//for each combination of shapes
 shapes.forEach(s1=>{
   shapes.forEach(s2=>{
     shapes.forEach(s3=>{
       shapes.forEach(s4=>{
-        
+        //get x intercepts
         const sl1 = getXInts(s1)
         const sl2 = getXInts(s2)
         const sl3 = getXInts(s3)
         const sl4 = getXInts(s4)
-        // if( (sl1.bl == 24 && sl2.tr== 26 )  && (sl3.tl== -4  && sl4.br == -2)){
+
         if( 
+          //if the shape parts surround one 
           Math.abs(sl1.bl- sl2.tr)== 2   &&
           Math.abs(sl3.tl-sl4.br) == 2  &&
+          //and none of the shapes are the same
           !hasOverlap([
             sl1.parent,
             sl2.parent,
@@ -114,25 +84,14 @@ shapes.forEach(s1=>{
             sl4.parent,
           ])
         ){
-
-            
+          //calculate tuning frequency
           let y = (sl1.bl + sl2.tr +sl3.tl + sl4.br ) /4 
-          if((sl1.bl == 24 && sl2.tr== 26 )  && (sl3.tl== -4  && sl4.br == -2)){
-            console.log()
-          }
           let avgxI = ((sl1.bl +sl2.tr)/2)
           let x = -y +avgxI
-          fittingShapes.push([x,y])
-          console.log('p2:',x*y)
+          //output solution
+          console.log('p2:',(x*4_000_000)+y)
         }
-
       })
     })
   })
 })
-
-
-// > 9821458207265
-
-
-
