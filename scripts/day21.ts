@@ -5,10 +5,8 @@ type instr = [string,string,string,string] | [string,number]
 // parse instructions
 let input= (await parseInput("21.txt","\r\n"))
 .map(el=> el.split(/: | /))
-.map(el=>el.length == 2 ?
-  <instr>[el[0],parseInt(el[1])]
-  :
-  <instr>el
+// using the ternary operator bc im cool like that
+.map(el=>el.length == 2 ? <instr>[el[0],parseInt(el[1])]:<instr>el
 )
 
 //types are weird but whatevs
