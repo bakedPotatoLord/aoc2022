@@ -18,6 +18,8 @@ let instr:[number[],(1|-1)[]] = [
   .map(el=>el[0] == 'R' ? 1 :-1),
 ]
 
+let instrCopy = deepCopy(instr)
+
 function isOnMap(x:number,y:number){
   try{
     map[y][x]
@@ -51,12 +53,10 @@ while(instr[0].length > 0){
   if(instr[0].length != instr[1].length){
     dir = ((dir+ instr[1].shift())+4) %  4
   }
-  
 
   unhindered:{
     for(let i =0;i<dist;i++){
       let startPos:[number,number] = [pos.x,pos.y]
-      console.log(pos.toString(),dir)
       if(dir == 0){
         pos.x++
         if(charAt(pos.x,pos.y)=='hash'){
@@ -131,3 +131,34 @@ while(instr[0].length > 0){
 }
 
 console.log('p1',(1000*(pos.y+1))+(4*(pos.x+1))+dir)
+
+
+dir = 0
+pos = new Point(input[0].search(/\./),0)
+instr = deepCopy(instrCopy)
+/*
+top,bottom
+left, right
+front, back
+*/
+function getSides(x:number,y:number):[number[],number[]]{
+  return [[4*x,4*y],[4*x+3,4*y+3]]
+}
+let faces= {
+  top:getSides(2,1),
+  back:getSides(0,2),
+  front:getSides(2,2),
+  left:getSides(1,1),
+  bottom:getSides(0,1),
+  right:getSides(0,1),
+  
+}
+
+function getside(x:number,y:number){
+  for (const [key,val] of Object.entries(faces)) {
+    if( x>=val[0][0] && x<=val[1][0] && y>=val[0][1] && y<=val[1][1] ){
+      
+    }
+  }
+}
+
