@@ -36,7 +36,7 @@ export class Point{
 
   equals=(p:Point)=> this.x == p.x && this.y == p.y
   clone = ()=>deepCopy(this)
-  toString = ():string => `x : ${this.x},y : ${this.y}`
+  toString = ():string => `Point: ${this.x},${this.y}`
   toHash = ()=> `${this.x},${this.y}`
   slopeTo =(p1:Point)=>(p1.y-this.y) / (p1.x-this.x)
 }
