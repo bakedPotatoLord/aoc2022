@@ -1,11 +1,14 @@
 import { parseInput,arrSum, deepCopy,Point,Node,range, parseInputAsNum,hasOverlap} from "./helpers.js";
 
+//parse input into 2d boolean array
 let input= (await parseInput("23.txt","\r\n"))
 .map(ln=>ln.split('').map(el=>(el == '#')))
 
+// OOP has uses... 
+// just no uses that its good at
 class Elf extends Point{
   proposed:string
-  toIntHash = ()=>toIntHash(this.x,this.y)
+  toHash = ()=>toHash(this.x,this.y)
 
   goToProposed(){
     let xy = this.proposed.split(',').map(el=>parseInt(el))
@@ -14,39 +17,27 @@ class Elf extends Point{
   }
 
   hasNeigbors(){
-    return elfPositions.has(toIntHash(this.x-1,this.y)) ||
-    elfPositions.has(toIntHash(this.x-1,this.y+1)) ||
-    elfPositions.has(toIntHash(this.x-1,this.y-1)) ||
-    elfPositions.has(toIntHash(this.x+1,this.y)) ||
-    elfPositions.has(toIntHash(this.x+1,this.y+1)) ||
-    elfPositions.has(toIntHash(this.x+1,this.y-1)) ||
-    elfPositions.has(toIntHash(this.x,this.y+1)) ||
-    elfPositions.has(toIntHash(this.x,this.y-1)) 
+    return elfPositions.has(toHash(this.x-1,this.y)) ||
+    elfPositions.has(toHash(this.x-1,this.y+1)) ||
+    elfPositions.has(toHash(this.x-1,this.y-1)) ||
+    elfPositions.has(toHash(this.x+1,this.y)) ||
+    elfPositions.has(toHash(this.x+1,this.y+1)) ||
+    elfPositions.has(toHash(this.x+1,this.y-1)) ||
+    elfPositions.has(toHash(this.x,this.y+1)) ||
+    elfPositions.has(toHash(this.x,this.y-1)) 
   }
 }
 
-function toIntHash(a:number|bigint,b:number|bigint){
-  /*
-  a = BigInt(a)
-  b = BigInt(b)
-  let A = a >= 0 ? 2n * a : -2n * a - 1n;
-  let B = b >= 0 ? 2n * b : -2n * b - 1n;
-  let C = (A >= B ? A * A + A + B : A + B * B) / 2n;
-  a < 0 && b < 0 || a >= 0 && b >= 0 ? C : -C - 1n;
-  return (A + B) * (A + B + 1n) / 2n + A;
-  */
- return a+','+b
-}
+//this could also be [parameters].join(',') but idk; it works
+const toHash =(a:number,b:number)=> a+','+b
 
-
+// initialize elf sets and array
 let elves:Elf[] = []
-
 let elfPositions:Set<string> = new Set()
+let considered:Set<string> = new Set()
+let duplicates:Set<string> = new Set()
 
-let considered:Set<bigint|string> = new Set()
-
-let duplicates:Set<bigint|string> = new Set()
-
+//fill sets and elf array 
 input.forEach((ln,y)=>{
   ln.forEach((el,x)=>{
     if(el){
@@ -58,9 +49,9 @@ input.forEach((ln,y)=>{
 
 let checks=[
   (el:Elf)=>{
-    if(!(elfPositions.has(toIntHash(el.x,el.y-1)) ||elfPositions.has(toIntHash(el.x+1,el.y-1)) || elfPositions.has(toIntHash(el.x-1,el.y-1)))){
+    if(!(elfPositions.has(toHash(el.x,el.y-1)) ||elfPositions.has(toHash(el.x+1,el.y-1)) || elfPositions.has(toHash(el.x-1,el.y-1)))){
       //north
-      el.proposed = toIntHash(el.x,el.y-1)
+      el.proposed = toHash(el.x,el.y-1)
       if(considered.has(el.proposed)) duplicates.add(el.proposed)
       considered.add(el.proposed)
       return true
@@ -69,9 +60,9 @@ let checks=[
     }
   },
   (el:Elf)=>{
-    if(!(elfPositions.has(toIntHash(el.x,el.y+1)) ||elfPositions.has(toIntHash(el.x+1,el.y+1)) || elfPositions.has(toIntHash(el.x-1,el.y+1)))){
+    if(!(elfPositions.has(toHash(el.x,el.y+1)) ||elfPositions.has(toHash(el.x+1,el.y+1)) || elfPositions.has(toHash(el.x-1,el.y+1)))){
       //south
-      el.proposed = toIntHash(el.x,el.y+1)
+      el.proposed = toHash(el.x,el.y+1)
       if(considered.has(el.proposed)) duplicates.add(el.proposed)
       considered.add(el.proposed)
       return true
@@ -80,9 +71,9 @@ let checks=[
     }
   },
   (el:Elf)=>{
-    if(!(elfPositions.has(toIntHash(el.x-1,el.y)) ||elfPositions.has(toIntHash(el.x-1,el.y+1)) || elfPositions.has(toIntHash(el.x-1,el.y-1)))){
+    if(!(elfPositions.has(toHash(el.x-1,el.y)) ||elfPositions.has(toHash(el.x-1,el.y+1)) || elfPositions.has(toHash(el.x-1,el.y-1)))){
       //West
-      el.proposed = toIntHash(el.x-1,el.y)
+      el.proposed = toHash(el.x-1,el.y)
       if(considered.has(el.proposed)) duplicates.add(el.proposed)
       considered.add(el.proposed)
       return true
@@ -91,9 +82,9 @@ let checks=[
     }
   },
   (el:Elf)=>{
-    if(!(elfPositions.has(toIntHash(el.x+1,el.y)) ||elfPositions.has(toIntHash(el.x+1,el.y+1)) || elfPositions.has(toIntHash(el.x+1,el.y-1)))){
+    if(!(elfPositions.has(toHash(el.x+1,el.y)) ||elfPositions.has(toHash(el.x+1,el.y+1)) || elfPositions.has(toHash(el.x+1,el.y-1)))){
       //East
-      el.proposed = toIntHash(el.x+1,el.y)
+      el.proposed = toHash(el.x+1,el.y)
       if(considered.has(el.proposed)) duplicates.add(el.proposed)
       considered.add(el.proposed)
       return true
@@ -101,68 +92,53 @@ let checks=[
       return false
     }
   }
-  
 ]
-const numRounds = 10
-
+//youl understand why this is a function when you get to line 138
 function executeRound(){
-  
+  //clear sets for each new round
   duplicates.clear()
   considered.clear()
+
+  //round part 1: propose a move 
   elves.forEach(el=>{
-  
     if(el.hasNeigbors()){
       check:{
-        for(let i of checks){
-          if(i(el)) break check
+        for(let check of checks){
+          if(check(el)) break check //check function returns if it proposed a move
         }
-        el.proposed = el.toIntHash()
+        el.proposed = el.toHash()
       }
     }else{
-      el.proposed = el.toIntHash()
+      el.proposed = el.toHash()
     }
   })
-  
+  // round part 2: move all valid elves
   elves.forEach(el=>{
-      let [x,y] = el.toIntHash()
-      .split(',')
-      .map(el=>parseInt(el))
-      if(!duplicates.has(el.proposed) ){
-        elfPositions.delete(el.toIntHash())
-        el.goToProposed()
-        elfPositions.add(el.proposed)
-      }
-  
+    if(!duplicates.has(el.proposed) ){
+      elfPositions.delete(el.toHash())
+      el.goToProposed()
+      elfPositions.add(el.proposed)
+    }
   })
+  //move first instruction to the end of the array
   checks.push(checks.shift())
-  /*
-  console.log(`\r\nend of round ${round+1}\r\n`)
-  
-  let rep =input.map((ln,y)=>
-    ln.map((e,x)=>elfPositions.has(toIntHash(x,y))?'#':'.')
-    .join('')
-  ).join('\r\n')
-  
-  console.log(rep)
-  */
 }
-let round = 0
 
+let round = 0
 while(round < 10){
   executeRound()
   round++
 }
-
+//do part 1 calculations
 let height = Math.max(...elves.map(e=>e.y)) -Math.min(...elves.map(e=>e.y)) + 1
 let width = Math.max(...elves.map(e=>e.x)) - Math.min(...elves.map(e=>e.x)) +1
-
 let totalSquares = (height * width)
-
+// part 1 complete
 let p1 = totalSquares - elves.length
-
-
+//start executing until it reaches target round
 while(true){
   executeRound()
+  // none are considered if none have neigbors
   if(considered.size == 0){
     console.clear()
     console.log("p1:",p1)
