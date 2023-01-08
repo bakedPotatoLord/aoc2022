@@ -149,5 +149,3 @@ while(true){
   console.log(Math.floor((round+1)/895*100)+'%')
   round++
 }
-
-// greater than 894
