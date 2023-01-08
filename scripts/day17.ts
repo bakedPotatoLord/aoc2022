@@ -125,6 +125,8 @@ let shapes:Shape[] = []
 
 const numRocks = 2022
 
+let start  = Date.now()
+
 for(let i = 0;i<numRocks;i++){
   let current = new Shape(i %5)
 
@@ -162,3 +164,5 @@ for(let i = 0;i<numRocks;i++){
 }
 console.clear()
 console.log('p1',getHighest())
+
+console.log("time to complete",(Date.now()-start)/1000,'seconds')
