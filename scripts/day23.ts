@@ -105,11 +105,12 @@ let checks=[
 ]
 const numRounds = 10
 
-for(let round = 0;round<numRounds;round++ ){
+function executeRound(){
   
-
+  duplicates.clear()
+  considered.clear()
   elves.forEach(el=>{
-
+  
     if(el.hasNeigbors()){
       check:{
         for(let i of checks){
@@ -131,29 +132,46 @@ for(let round = 0;round<numRounds;round++ ){
         el.goToProposed()
         elfPositions.add(el.proposed)
       }
-
+  
   })
   checks.push(checks.shift())
-  duplicates.clear()
-  considered.clear()
-
+  /*
   console.log(`\r\nend of round ${round+1}\r\n`)
-
+  
   let rep =input.map((ln,y)=>
     ln.map((e,x)=>elfPositions.has(toIntHash(x,y))?'#':'.')
     .join('')
   ).join('\r\n')
-
-  console.log(rep)
-
   
+  console.log(rep)
+  */
+}
+let round = 0
 
+while(round < 10){
+  executeRound()
+  round++
 }
 
-let height = Math.max(...elves.map(e=>e.y)) -Math.min(...elves.map(e=>e.y))
-let width = Math.max(...elves.map(e=>e.x)) - Math.min(...elves.map(e=>e.x))
+let height = Math.max(...elves.map(e=>e.y)) -Math.min(...elves.map(e=>e.y)) + 1
+let width = Math.max(...elves.map(e=>e.x)) - Math.min(...elves.map(e=>e.x)) +1
 
 let totalSquares = (height * width)
 
-// less than 4900
-console.log("p1:",totalSquares)
+let p1 = totalSquares - elves.length
+
+
+while(true){
+  executeRound()
+  if(considered.size == 0){
+    console.clear()
+    console.log("p1:",p1)
+    console.log('p2:',round+1)
+    break
+  }
+  console.clear()
+  console.log(Math.floor((round+1)/895*100)+'%')
+  round++
+}
+
+// greater than 894
