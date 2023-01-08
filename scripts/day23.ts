@@ -123,8 +123,10 @@ for(let round = 0;round<numRounds;round++ ){
   })
   
   elves.forEach(el=>{
-
-      if(!duplicates.has(el.proposed)){
+      let [x,y] = el.toIntHash()
+      .split(',')
+      .map(el=>parseInt(el))
+      if(!duplicates.has(el.proposed) ){
         elfPositions.delete(el.toIntHash())
         el.goToProposed()
         elfPositions.add(el.proposed)
@@ -134,7 +136,18 @@ for(let round = 0;round<numRounds;round++ ){
   checks.push(checks.shift())
   duplicates.clear()
   considered.clear()
-  console.log()
+
+  console.log(`\r\nend of round ${round+1}\r\n`)
+
+  let rep =input.map((ln,y)=>
+    ln.map((e,x)=>elfPositions.has(toIntHash(x,y))?'#':'.')
+    .join('')
+  ).join('\r\n')
+
+  console.log(rep)
+
+  
+
 }
 
 let height = Math.max(...elves.map(e=>e.y)) -Math.min(...elves.map(e=>e.y))
@@ -142,4 +155,5 @@ let width = Math.max(...elves.map(e=>e.x)) - Math.min(...elves.map(e=>e.x))
 
 let totalSquares = (height * width)
 
-console.log("p1:",totalSquares-elves.length)
+// less than 4900
+console.log("p1:",totalSquares)
