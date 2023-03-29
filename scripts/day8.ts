@@ -1,5 +1,5 @@
 import { parseInput,arrSum, deepCopy} from "./helpers.js";
-//split into a 3d string array 🤏
+//split into a 2d string array 🤏
 let input = (await parseInput("8.txt","\r\n"))
 .map(el=>el.split("")
 .map(el=>parseInt(el)))
